@@ -27,4 +27,8 @@
         where id = #{id}
     </update>
 
+    <!-- 删除品牌 -->
+    <delete id="delete" parameterType="long">
+        delete from tb_brand where id = #{id}
+    </delete>
 </mapper>

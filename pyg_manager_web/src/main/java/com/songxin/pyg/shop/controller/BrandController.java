@@ -93,6 +93,28 @@ public class BrandController {
             e.printStackTrace();
             return new OperateResultVO(false, "修改失败");
         }
-
     }
+
+    /**
+     * 批量删除品牌
+     * @param checkedIds
+     * @return com.songxin.pyg.vo.OperateResultVO
+     * @author fishsx
+     * @date 2018/12/4 下午10:09
+     */
+    @RequestMapping("batchDelete")
+    public OperateResultVO batchDelete(@RequestBody Long[] checkedIds) {
+        if (checkedIds == null || checkedIds.length < 1) {
+            return new OperateResultVO(false, "参数异常!参数为空");
+        }
+
+        try {
+            brandService.batchDelete(checkedIds);
+            return new OperateResultVO(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new OperateResultVO(false, "删除失败");
+        }
+    }
+
 }

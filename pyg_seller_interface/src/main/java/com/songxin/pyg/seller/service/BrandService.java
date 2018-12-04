@@ -53,4 +53,14 @@ public interface BrandService {
      * @date 2018/12/4 下午8:37
      */
     void update(TbBrand brand);
+
+
+    /**
+     * 批量删除品牌
+     * @param checkedIds
+     * @return void
+     * @author fishsx
+     * @date 2018/12/4 下午10:17
+     */
+    void batchDelete(Long[] checkedIds);
 }

@@ -86,4 +86,19 @@ public class BrandServiceImpl implements BrandService {
     public void update(TbBrand brand) {
         brandMapper.update(brand);
     }
+
+    /**
+     * 批量删除品牌
+     *
+     * @param checkedIds
+     * @return void
+     * @author fishsx
+     * @date 2018/12/4 下午10:17
+     */
+    @Override
+    public void batchDelete(Long[] checkedIds) {
+        for (Long id : checkedIds) {
+            brandMapper.delete(id);
+        }
+    }
 }

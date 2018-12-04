@@ -44,4 +44,13 @@ public interface BrandMapper {
      * @date 2018/12/4 下午8:37
      */
     void update(TbBrand brand);
+
+    /**
+     * 删除品牌
+     * @param id
+     * @return void
+     * @author fishsx
+     * @date 2018/12/4 下午10:19
+     */
+    void delete(Long id);
 }

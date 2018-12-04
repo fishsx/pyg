@@ -37,7 +37,7 @@
                             <button type="button" ng-click="obj={}"  class="btn btn-default" title="新建" data-toggle="modal"
                                     data-target="#editModal"><i class="fa fa-file-o"></i> 新建
                             </button>
-                            <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除
+                            <button ng-click="del()" type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除
                             </button>
                             <button type="button" class="btn btn-default" title="刷新"
                                     onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新
@@ -47,6 +47,9 @@
                 </div>
                 <div class="box-tools pull-right">
                     <div class="has-feedback">
+                        品牌名称:<input ng-model="queryVO.name">
+                        品牌首字母:<input ng-model="queryVO.firstChar">
+                        <button class="btn btn-default" ng-click="reloadList()">查询</button>
 
                     </div>
                 </div>
@@ -67,7 +70,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="entity in list" ng-init="findAllByPage">
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" ng-click="updateSelection($event,entity.id)" ng-checked="isChecked(entity.id)"></td>
                         <td>{{entity.id}}</td>
                         <td>{{entity.name}}</td>
                         <td>{{entity.firstChar}}</td>
@@ -122,10 +125,29 @@
         <script>
             var app = angular.module('pyg', ["pagination"]);
             app.controller("brandController",function ($scope,$http) {
+
+                //记录复选框选中的id
+                $scope.checkedIds = [];
+                $scope.updateSelection = function ($event, id) {
+                    if ($event.target.checked) {
+                        //[] -> [x] 选中
+                        $scope.checkedIds.push(id);
+                    } else {
+                        //[x] -> [] 取消选中
+                        var index = $scope.checkedIds.indexOf(id);
+                        $scope.checkedIds.splice(index,1);
+                    }
+                };
+
+                //保证在改变页数的时候能够显示已经选中的复选框
+                $scope.isChecked = function (id) {
+                    return $scope.checkedIds.indexOf(id) !== -1;
+                };
+
                 //angular分页配置
                 $scope.paginationConf = {
                     currentPage: 1,  				//当前页
-                    totalItems: 10,					//总记录数
+                    // totalItems: 10,					//总记录数
                     itemsPerPage: 10,				//每页记录数
                     perPageOptions: [10, 20, 30, 40, 50], //分页选项，下拉选择一页多少条记录
                     onChange: function () {			//页面变更后触发的方法
@@ -179,7 +201,6 @@
                 };
                 //修改品牌
                 $scope.modify = function (id) {
-                    // $scope.obj.id = id;
                     $http.post("../brand/update.do", $scope.obj).success(function (data) {
                         if (data.success) {
                             $scope.reloadList();
@@ -187,7 +208,22 @@
                             alert(data.message);
                         }
                     });
+                };
+
+                //批量删除品牌
+                $scope.del = function () {
+                    if (confirm("您确定要删除吗?")) {
+                        $http.post("../brand/batchDelete.do" , $scope.checkedIds).success(function (data) {
+                            if (data.success) {
+                                $scope.reloadList();
+                                $scope.checkedIds = [];
+                            } else {
+                                alert(data.message);
+                            }
+                        });
+                    }
                 }
+
             });
 
         </script>
