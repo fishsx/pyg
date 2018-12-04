@@ -48,4 +48,42 @@ public class BrandServiceImpl implements BrandService {
         Page<TbBrand> list = (Page<TbBrand>) brandMapper.findAll();
         return new PageResultVO(list.getTotal(), list.getResult());
     }
+
+    /**
+     * 添加品牌
+     * @param brand
+     * @return void
+     * @author fishsx
+     * @date 2018/12/4 下午7:33
+     */
+    @Override
+    public void add(TbBrand brand) {
+        brandMapper.add(brand);
+    }
+
+    /**
+     * 根据id查找品牌
+     *
+     * @param id
+     * @return com.songxin.pyg.pojo.TbBrand
+     * @author fishsx
+     * @date 2018/12/4 下午8:22
+     */
+    @Override
+    public TbBrand findOneById(Integer id) {
+        return brandMapper.findOneById(id);
+    }
+
+    /**
+     * 修改品牌
+     *
+     * @param brand
+     * @return void
+     * @author fishsx
+     * @date 2018/12/4 下午8:37
+     */
+    @Override
+    public void update(TbBrand brand) {
+        brandMapper.update(brand);
+    }
 }

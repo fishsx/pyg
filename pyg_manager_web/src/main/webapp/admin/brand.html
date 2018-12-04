@@ -34,7 +34,7 @@
                 <div class="pull-left">
                     <div class="form-group form-inline">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
+                            <button type="button" ng-click="obj={}"  class="btn btn-default" title="新建" data-toggle="modal"
                                     data-target="#editModal"><i class="fa fa-file-o"></i> 新建
                             </button>
                             <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除
@@ -72,7 +72,7 @@
                         <td>{{entity.name}}</td>
                         <td>{{entity.firstChar}}</td>
                         <td class="text-center">
-                            <button type="button" class="btn bg-olive btn-xs" data-toggle="modal"
+                            <button ng-click="showData(entity.id)" type="button" class="btn bg-olive btn-xs" data-toggle="modal"
                                     data-target="#editModal">修改
                             </button>
                         </td>
@@ -103,17 +103,17 @@
                         <table class="table table-bordered table-striped" width="800px">
                             <tr>
                                 <td>品牌名称</td>
-                                <td><input class="form-control" placeholder="品牌名称"></td>
+                                <td><input ng-model="obj.name" class="form-control" placeholder="品牌名称"></td>
                             </tr>
                             <tr>
                                 <td>首字母</td>
-                                <td><input class="form-control" placeholder="首字母"></td>
+                                <td><input ng-model="obj.firstChar" class="form-control" placeholder="首字母"></td>
                             </tr>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
-                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                        <button ng-click="save()" class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                        <button  class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
                     </div>
                 </div>
             </div>
@@ -138,14 +138,56 @@
                     $scope.findAllByPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
                 };
                 //分页查询所有
-                $scope.findAllByPage = function (pageNum,pageSize) {
+                $scope.findAllByPage = function (pageNum, pageSize) {
 
-                        $http.get('../brand/findAllByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize).success(function (data) {
-                            $scope.list = data.data;
-                            $scope.paginationConf.totalItems = data.total;
+                    $http.get('../brand/findAllByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize).success(function (data) {
+                        $scope.list = data.data;
+                        $scope.paginationConf.totalItems = data.total;
+                    });
+                };
+
+                //保存 (调用新增/修改方法)
+                $scope.save = function () {
+                    if ($scope.obj.id != null) {
+                        //执行修改方法
+                        $scope.modify($scope.obj.id);
+                    } else {
+                        // 执行新增方法
+                        $scope.add();
+                    }
+                };
+
+                //新建品牌
+                $scope.add = function () {
+                    $http.post('../brand/add.do', $scope.obj).success(function (data) {
+                        if (data.success) {
+                            $scope.reloadList();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                };
+
+                //回显修改页面的数据
+                $scope.showData = function (id) {
+                    $scope.obj = {};
+                    $http.get("../brand/findOneById.do?id="+id).success(function (data) {
+                        if (data != null) {
+                            $scope.obj = data;
+                        }
+                    });
+                };
+                //修改品牌
+                $scope.modify = function (id) {
+                    // $scope.obj.id = id;
+                    $http.post("../brand/update.do", $scope.obj).success(function (data) {
+                        if (data.success) {
+                            $scope.reloadList();
+                        } else {
+                            alert(data.message);
+                        }
                     });
                 }
-
             });
 
         </script>

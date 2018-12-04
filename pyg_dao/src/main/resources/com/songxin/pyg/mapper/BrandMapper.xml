@@ -8,4 +8,23 @@
         select id,name,first_char firstChar from tb_brand
     </select>
 
+    <!-- 新增品牌 -->
+    <insert id="add" parameterType="tbBrand">
+        insert into tb_brand (name, first_char)
+        values (#{name}, #{firstChar})
+    </insert>
+
+    <!-- 根据 id 查找品牌-->
+    <select id="findOneById" parameterType="int" resultType="tbBrand">
+        select id, name, first_char firstChar
+        from tb_brand
+        where id = #{id};
+    </select>
+
+    <!-- 修改品牌-->
+    <update id="update" parameterType="tbBrand">
+        update tb_brand set name = #{name}, first_char = #{firstChar}
+        where id = #{id}
+    </update>
+
 </mapper>

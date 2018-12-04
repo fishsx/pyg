@@ -27,4 +27,30 @@ public interface BrandService {
      * @date 2018/12/4 下午4:32
      */
     PageResultVO findAllByPage(Integer pageNum, Integer pageSize);
+
+    /**
+     * @param brand
+     * @return void
+     * @author fishsx
+     * @date 2018/12/4 下午7:34
+     */
+    void add(TbBrand brand);
+
+    /**
+     * 根据id查找品牌
+     * @param id
+     * @return com.songxin.pyg.pojo.TbBrand
+     * @author fishsx
+     * @date 2018/12/4 下午8:22
+     */
+    TbBrand findOneById(Integer id);
+
+    /**
+     * 修改品牌
+     * @param brand
+     * @return void
+     * @author fishsx
+     * @date 2018/12/4 下午8:37
+     */
+    void update(TbBrand brand);
 }
