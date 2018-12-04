@@ -117,4 +117,18 @@ public class BrandController {
         }
     }
 
+    /**
+     * 根据条件查询
+     * @param pageNum
+     * @param pageSize
+     * @param brand
+     * @return com.songxin.pyg.vo.PageResultVO
+     * @author fishsx
+     * @date 2018/12/4 下午11:22
+     */
+    @RequestMapping("findByCondition")
+    public PageResultVO findByCondition(Integer pageNum, Integer pageSize,
+                                        @RequestBody TbBrand brand) {
+        return brandService.findByCondition(pageNum, pageSize, brand);
+    }
 }

@@ -101,4 +101,21 @@ public class BrandServiceImpl implements BrandService {
             brandMapper.delete(id);
         }
     }
+
+    /**
+     * 根据条件查询
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param brand
+     * @return com.songxin.pyg.vo.PageResultVO
+     * @author fishsx
+     * @date 2018/12/4 下午11:25
+     */
+    @Override
+    public PageResultVO findByCondition(Integer pageNum, Integer pageSize, TbBrand brand) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<TbBrand> page = (Page<TbBrand>) brandMapper.findByCondition(brand);
+        return new PageResultVO(page.getTotal(), page.getResult());
+    }
 }

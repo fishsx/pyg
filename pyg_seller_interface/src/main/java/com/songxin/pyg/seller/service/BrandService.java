@@ -63,4 +63,15 @@ public interface BrandService {
      * @date 2018/12/4 下午10:17
      */
     void batchDelete(Long[] checkedIds);
+
+    /**
+     * 根据条件查询
+     * @param pageNum
+     * @param pageSize
+     * @param brand
+     * @return com.songxin.pyg.vo.PageResultVO
+     * @author fishsx
+     * @date 2018/12/4 下午11:25
+     */
+    PageResultVO findByCondition(Integer pageNum, Integer pageSize, TbBrand brand);
 }

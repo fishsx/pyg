@@ -156,9 +156,15 @@
                 };
                 //重新加载数据
                 $scope.reloadList = function () {
-                    //根据当前页和每页条数查询
-                    $scope.findAllByPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+                    if ($scope.queryVO === undefined) {
+                        //根据当前页和每页条数查询 (查询所有)
+                        $scope.findAllByPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+                    } else {
+                        //根据条件查询
+                        $scope.findByCondition($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage, $scope.queryVO);
+                    }
                 };
+
                 //分页查询所有
                 $scope.findAllByPage = function (pageNum, pageSize) {
 
@@ -166,6 +172,20 @@
                         $scope.list = data.data;
                         $scope.paginationConf.totalItems = data.total;
                     });
+                };
+
+                //根据条件查询
+                $scope.findByCondition = function (pageNum, pageSize, conditionObj) {
+
+                    $http.post("../brand/findByCondition.do?pageNum=" + pageNum + "&pageSize=" + pageSize , conditionObj)
+                        .success(function (data) {
+                            if (data.data.length < 1) {
+                                $scope.list = data.data;
+                            } else {
+                                $scope.list = data.data;
+                                $scope.paginationConf.totalItems = data.total;
+                            }
+                    })
                 };
 
                 //保存 (调用新增/修改方法)

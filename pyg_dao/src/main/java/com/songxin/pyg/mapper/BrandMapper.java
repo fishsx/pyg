@@ -53,4 +53,13 @@ public interface BrandMapper {
      * @date 2018/12/4 下午10:19
      */
     void delete(Long id);
+
+    /**
+     * 根据条件查询
+     * @param brand
+     * @return java.util.List<com.songxin.pyg.pojo.TbBrand>
+     * @author fishsx
+     * @date 2018/12/4 下午11:29
+     */
+    List<TbBrand> findByCondition(TbBrand brand);
 }
