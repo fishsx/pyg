@@ -1,6 +1,7 @@
 package com.songxin.pyg.seller.service;
 
 import com.songxin.pyg.pojo.TbBrand;
+import com.songxin.pyg.vo.PageResultVO;
 
 import java.util.List;
 
@@ -18,4 +19,12 @@ public interface BrandService {
      */
     List<TbBrand> findAll();
 
+    /**
+     * @param pageNum
+	 * @param pageSize
+     * @return com.songxin.pyg.vo.PageResultVO
+     * @author fishsx
+     * @date 2018/12/4 下午4:32
+     */
+    PageResultVO findAllByPage(Integer pageNum, Integer pageSize);
 }
