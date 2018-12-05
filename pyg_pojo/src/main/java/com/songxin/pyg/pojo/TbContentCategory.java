@@ -2,13 +2,11 @@ package com.songxin.pyg.pojo;
 
 import java.io.Serializable;
 
-public class TbBrand implements Serializable {
-    private static final long serialVersionUID = -2478567961879417292L;
+public class TbContentCategory implements Serializable {
+    private static final long serialVersionUID = 6199826962519005897L;
     private Long id;
 
     private String name;
-
-    private String firstChar;
 
     public Long getId() {
         return id;
@@ -24,13 +22,5 @@ public class TbBrand implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public String getFirstChar() {
-        return firstChar;
-    }
-
-    public void setFirstChar(String firstChar) {
-        this.firstChar = firstChar == null ? null : firstChar.trim();
     }
 }
