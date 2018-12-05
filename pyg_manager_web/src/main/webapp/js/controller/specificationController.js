@@ -37,13 +37,43 @@ app.controller("specificationController", function ($scope, $controller, specifi
 
     //保存 (调用新增/修改方法)
     $scope.save = function () {
-        if ($scope.obj.id != null) {
+        if ($scope.obj.specification.id != null) {
             //执行修改方法
-            $scope.modify($scope.obj.id);
+            $scope.modify($scope.obj.specification.id);
         } else {
             // 执行新增方法
             $scope.add();
         }
+    };
+
+    //添加功能的json示例
+    //{
+    //   "specification": {
+    //     "id": "",
+    //     "specName": "颜色"
+    //   },
+    //   "specificationOptions": [
+    //     {
+    //       "specId": "",
+    //       "optionName": "绿色",
+    //       "orders": "1"
+    //     },
+    //     {
+    //       "specId": "",
+    //       "optionName": "蓝色",
+    //       "orders": "2"
+    //     }
+    //   ]
+    // }
+
+    //点击增加行的效果
+    $scope.addTableRow = function () {
+        $scope.obj.specificationOptions.push({}); //注意这里是大括弧，大括弧是对象，代表加新对象
+    };
+
+    //删除一行的效果
+    $scope.delTableRow = function (index) {
+        $scope.obj.specificationOptions.splice(index, 1);
     };
 
     //新建规格

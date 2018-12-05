@@ -2,6 +2,7 @@ package com.songxin.pyg.seller.service;
 
 import com.songxin.pyg.pojo.TbSpecification;
 import com.songxin.pyg.vo.PageResultVO;
+import com.songxin.pyg.vo.combvo.SpecificationVO;
 
 /**
  * 规格的业务层接口
@@ -30,4 +31,40 @@ public interface SpecificationService {
      * @date 2018/12/5 下午7:15
      */
     PageResultVO findByCondition(Integer pageNum, Integer pageSize, TbSpecification specification);
+
+    /**
+     * 新增规格
+     * @param specificationVO
+     * @return void
+     * @author fishsx
+     * @date 2018/12/5 下午7:53
+     */
+    void add(SpecificationVO specificationVO);
+
+    /**
+     * 根据id查找规格
+     * @param id
+     * @return com.songxin.pyg.vo.combvo.SpecificationVO
+     * @author fishsx
+     * @date 2018/12/5 下午10:01
+     */
+    SpecificationVO findOneById(Long id);
+
+    /**
+     * 修改规格
+     * @param specificationVO
+     * @return void
+     * @author fishsx
+     * @date 2018/12/5 下午10:14
+     */
+    void update(SpecificationVO specificationVO);
+
+    /**
+     * 批量删除 
+     * @param checkedIds 
+     * @return void
+     * @author fishsx
+     * @date 2018/12/5 下午10:39
+     */
+    void batchDelete(Long[] checkedIds);
 }
