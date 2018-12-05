@@ -14,9 +14,15 @@
         <script src="../plugins/angularjs/angular.min.js"></script>
         <!--导入分页插件-->
         <link rel="stylesheet" href="../plugins/angularjs/pagination.css"/>
-
         <script src="../plugins/angularjs/angular.min.js"></script>
         <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+
+        <!--导入分页模块-->
+        <script type="text/javascript" src="../js/base_pagination.js"></script>
+        <!--导入controller和service-->
+        <script type="text/javascript" src="../js/service/brandService.js"></script>
+        <script type="text/javascript" src="../js/controller/baseController.js"></script>
+        <script type="text/javascript" src="../js/controller/brandController.js"></script>
 
     </head>
     <body class="hold-transition skin-red sidebar-mini" ng-app="pyg" ng-controller="brandController">
@@ -123,128 +129,7 @@
         </div>
 
         <script>
-            var app = angular.module('pyg', ["pagination"]);
-            app.controller("brandController",function ($scope,$http) {
 
-                //记录复选框选中的id
-                $scope.checkedIds = [];
-                $scope.updateSelection = function ($event, id) {
-                    if ($event.target.checked) {
-                        //[] -> [x] 选中
-                        $scope.checkedIds.push(id);
-                    } else {
-                        //[x] -> [] 取消选中
-                        var index = $scope.checkedIds.indexOf(id);
-                        $scope.checkedIds.splice(index,1);
-                    }
-                };
-
-                //保证在改变页数的时候能够显示已经选中的复选框
-                $scope.isChecked = function (id) {
-                    return $scope.checkedIds.indexOf(id) !== -1;
-                };
-
-                //angular分页配置
-                $scope.paginationConf = {
-                    currentPage: 1,  				//当前页
-                    // totalItems: 10,					//总记录数
-                    itemsPerPage: 10,				//每页记录数
-                    perPageOptions: [10, 20, 30, 40, 50], //分页选项，下拉选择一页多少条记录
-                    onChange: function () {			//页面变更后触发的方法
-                        $scope.reloadList();		//启动就会调用分页组件
-                    }
-                };
-                //重新加载数据
-                $scope.reloadList = function () {
-                    if ($scope.queryVO === undefined) {
-                        //根据当前页和每页条数查询 (查询所有)
-                        $scope.findAllByPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
-                    } else {
-                        //根据条件查询
-                        $scope.findByCondition($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage, $scope.queryVO);
-                    }
-                };
-
-                //分页查询所有
-                $scope.findAllByPage = function (pageNum, pageSize) {
-
-                    $http.get('../brand/findAllByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize).success(function (data) {
-                        $scope.list = data.data;
-                        $scope.paginationConf.totalItems = data.total;
-                    });
-                };
-
-                //根据条件查询
-                $scope.findByCondition = function (pageNum, pageSize, conditionObj) {
-
-                    $http.post("../brand/findByCondition.do?pageNum=" + pageNum + "&pageSize=" + pageSize , conditionObj)
-                        .success(function (data) {
-                            if (data.data.length < 1) {
-                                $scope.list = data.data;
-                            } else {
-                                $scope.list = data.data;
-                                $scope.paginationConf.totalItems = data.total;
-                            }
-                    })
-                };
-
-                //保存 (调用新增/修改方法)
-                $scope.save = function () {
-                    if ($scope.obj.id != null) {
-                        //执行修改方法
-                        $scope.modify($scope.obj.id);
-                    } else {
-                        // 执行新增方法
-                        $scope.add();
-                    }
-                };
-
-                //新建品牌
-                $scope.add = function () {
-                    $http.post('../brand/add.do', $scope.obj).success(function (data) {
-                        if (data.success) {
-                            $scope.reloadList();
-                        } else {
-                            alert(data.message);
-                        }
-                    })
-                };
-
-                //回显修改页面的数据
-                $scope.showData = function (id) {
-                    $scope.obj = {};
-                    $http.get("../brand/findOneById.do?id="+id).success(function (data) {
-                        if (data != null) {
-                            $scope.obj = data;
-                        }
-                    });
-                };
-                //修改品牌
-                $scope.modify = function (id) {
-                    $http.post("../brand/update.do", $scope.obj).success(function (data) {
-                        if (data.success) {
-                            $scope.reloadList();
-                        } else {
-                            alert(data.message);
-                        }
-                    });
-                };
-
-                //批量删除品牌
-                $scope.del = function () {
-                    if (confirm("您确定要删除吗?")) {
-                        $http.post("../brand/batchDelete.do" , $scope.checkedIds).success(function (data) {
-                            if (data.success) {
-                                $scope.reloadList();
-                                $scope.checkedIds = [];
-                            } else {
-                                alert(data.message);
-                            }
-                        });
-                    }
-                }
-
-            });
 
         </script>
     </body>
