@@ -4,6 +4,9 @@ import com.songxin.pyg.pojo.TbSpecification;
 import com.songxin.pyg.vo.PageResultVO;
 import com.songxin.pyg.vo.combvo.SpecificationVO;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 规格的业务层接口
  * @author fishsx
@@ -67,4 +70,13 @@ public interface SpecificationService {
      * @date 2018/12/5 下午10:39
      */
     void batchDelete(Long[] checkedIds);
+
+    /**
+     * 查询规格Json列表
+     * @param
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/8 下午12:08
+     */
+    List<Map> findSpecJsonList();
 }

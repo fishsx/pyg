@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌的业务层的实现类
@@ -117,5 +118,17 @@ public class BrandServiceImpl implements BrandService {
         PageHelper.startPage(pageNum, pageSize);
         Page<TbBrand> page = (Page<TbBrand>) brandMapper.findByCondition(brand);
         return new PageResultVO(page.getTotal(), page.getResult());
+    }
+
+    /**
+     * 查询品牌Json列表
+     *
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/8 上午11:43
+     */
+    @Override
+    public List<Map> findBrandJsonList() {
+        return brandMapper.findBrandJsonList();
     }
 }

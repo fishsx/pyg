@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 规格的控制器
  * @author fishsx
@@ -111,6 +114,27 @@ public class SpecificationController {
             return new OperateResultVO(false, "删除失败");
         }
 
+    }
+
+
+    /**
+     * 查询规格Json列表
+     * 返回结果sample:
+     *   [{
+     *     "id": 1,
+     *     "text": "XXXX"
+     *   },
+     *   {
+     *     "id": 2,
+     *     "text": "XX"
+     *   }]
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/8 上午12:07
+     */
+    @RequestMapping("findSpecJsonList")
+    public List<Map> findSpecJsonList() {
+        return specificationService.findSpecJsonList();
     }
 
 }

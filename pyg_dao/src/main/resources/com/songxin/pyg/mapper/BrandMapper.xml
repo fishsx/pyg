@@ -44,4 +44,10 @@
             </if>
         </where>
     </select>
+
+    <!-- 查询品牌json列表 -->
+    <select id="findBrandJsonList" resultType="map">
+        select id,name as text from tb_brand
+    </select>
+
 </mapper>

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 规格的业务层实现
@@ -147,4 +148,17 @@ public class SpecificationServiceImpl implements SpecificationService {
             specificationMapper.deleteByPrimaryKey(id);
         }
     }
+
+    /**
+     * 查询规格Json列表
+     *
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/8 下午12:08
+     */
+    @Override
+    public List<Map> findSpecJsonList() {
+        return specificationMapper.findSpecJsonList();
+    }
+
 }

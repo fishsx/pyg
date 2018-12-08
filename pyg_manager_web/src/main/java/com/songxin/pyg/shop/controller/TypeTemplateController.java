@@ -1,6 +1,7 @@
 package com.songxin.pyg.shop.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -119,5 +120,7 @@ public class TypeTemplateController {
     public PageResultVO findByCondition(@RequestBody TbTypeTemplate typeTemplate, Integer pageNum, Integer pageSize) {
         return typeTemplateService.findByCondition(typeTemplate, pageNum, pageSize);
     }
+
+
 
 }

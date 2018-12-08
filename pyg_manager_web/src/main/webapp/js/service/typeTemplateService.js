@@ -2,9 +2,9 @@
 app.service("typeTemplateService", function ($http) {
 
 	//读取列表数据绑定到表单中
-	this.findAll=function(){
-		return $http.get('../typeTemplate/findAll.do');
-	}
+    this.findAll = function () {
+        return $http.get('../typeTemplate/findAll.do');
+    };
     //分页查询所有
     this.findByPage = function (pageNum,pageSize) {
         return $http.get('../typeTemplate/findByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize);
@@ -29,5 +29,6 @@ app.service("typeTemplateService", function ($http) {
     this.batchDelete = function (idsArr) {
         return $http.post("../typeTemplate/batchDelete.do", idsArr);
     };
+
 
 });

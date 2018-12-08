@@ -3,6 +3,7 @@ package com.songxin.pyg.mapper;
 import com.songxin.pyg.pojo.TbBrand;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌的持久层接口
@@ -62,4 +63,13 @@ public interface BrandMapper {
      * @date 2018/12/4 下午11:29
      */
     List<TbBrand> findByCondition(TbBrand brand);
+
+    /**
+     * 查询品牌Json列表
+     *
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/8 上午11:43
+     */
+    public List<Map> findBrandJsonList();
 }

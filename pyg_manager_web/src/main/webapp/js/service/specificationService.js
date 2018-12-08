@@ -24,4 +24,9 @@ app.service("specificationService", function ($http) {
         return $http.post("../specification/batchDelete.do", idsArr);
     };
 
+    //查找规格Json列表 (用于select2的显示)
+    this.findSpecJsonList = function () {
+        return $http.get("../specification/findSpecJsonList.do");
+    };
+
 });

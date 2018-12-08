@@ -4,6 +4,7 @@ import com.songxin.pyg.pojo.TbBrand;
 import com.songxin.pyg.vo.PageResultVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌的业务层接口
@@ -74,4 +75,12 @@ public interface BrandService {
      * @date 2018/12/4 下午11:25
      */
     PageResultVO findByCondition(Integer pageNum, Integer pageSize, TbBrand brand);
+
+    /**
+     * 查询品牌Json列表
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/8 上午11:43
+     */
+    List<Map> findBrandJsonList();
 }

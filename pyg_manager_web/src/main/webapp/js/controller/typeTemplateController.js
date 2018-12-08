@@ -1,5 +1,5 @@
  //控制层
-app.controller("typeTemplateController", function ($scope, $controller, typeTemplateService) {
+app.controller("typeTemplateController", function ($scope, $controller, typeTemplateService, brandService,specificationService) {
     //继承基本的控制器 (共享$scope)
     $controller('baseController', {$scope: $scope});
 
@@ -37,9 +37,9 @@ app.controller("typeTemplateController", function ($scope, $controller, typeTemp
 
     //保存 (调用新增/修改方法)
     $scope.save = function () {
-        if ($scope.obj.typeTemplate.id != null) {
+        if ($scope.obj.id != null) {
             //执行修改方法
-            $scope.modify($scope.obj.typeTemplate.id);
+            $scope.modify($scope.obj.id);
         } else {
             // 执行新增方法
             $scope.add();
@@ -69,10 +69,13 @@ app.controller("typeTemplateController", function ($scope, $controller, typeTemp
 
     //回显修改页面的数据
     $scope.showData = function (id) {
-        $scope.obj = {};
         typeTemplateService.findOneById(id).success(function (data) {
             if (data != null) {
-                $scope.obj = data;
+                $scope.obj = {id:id};
+                $scope.obj.name = data.name;
+                $scope.obj.brandIds = JSON.parse(data.brandIds);
+                $scope.obj.specIds = JSON.parse(data.specIds);
+                $scope.obj.customAttributeItems = JSON.parse(data.customAttributeItems);
             }
         });
     };
@@ -99,6 +102,40 @@ app.controller("typeTemplateController", function ($scope, $controller, typeTemp
                 }
             });
         }
-    }
+    };
+
+
+    //查找品牌列表的Json列表 (用于Select2的显示)
+    $scope.findBrandJsonList = function () {
+        brandService.findBrandJsonList().success(function (data) {
+            if (data != null) {
+                $scope.brandJson = {"data": data};
+            } else {
+                alert("查询品牌列表失败!")
+            }
+        })
+    };
+
+    //查找规格列表的Json列表 (用于Select2的显示)
+    $scope.findSpecJsonList = function () {
+        specificationService.findSpecJsonList().success(function (data) {
+            if (data != null) {
+                $scope.specJson = {"data": data};
+            } else {
+                alert("查询规格列表失败!")
+            }
+        })
+    };
+
+    // 添加一行
+    $scope.addRow = function () {
+        $scope.obj.customAttributeItems.push({});
+    };
+
+    //删除一行
+    $scope.delRow = function (index) {
+        $scope.obj.customAttributeItems.splice(index, 1);
+    };
+
 
 });

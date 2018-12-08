@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌的控制器
@@ -130,5 +131,26 @@ public class BrandController {
     public PageResultVO findByCondition(Integer pageNum, Integer pageSize,
                                         @RequestBody TbBrand brand) {
         return brandService.findByCondition(pageNum, pageSize, brand);
+    }
+
+    /**
+     * 查询品牌Json列表
+     * 返回结果sample:
+     *   [{
+     *     "id": 1,
+     *     "text": "联想"
+     *   },
+     *   {
+     *     "id": 2,
+     *     "text": "华为"
+     *   }]
+     * @param
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/8 上午11:41
+     */
+    @RequestMapping("findBrandJsonList")
+    public List<Map> findBrandJsonList() {
+        return brandService.findBrandJsonList();
     }
 }

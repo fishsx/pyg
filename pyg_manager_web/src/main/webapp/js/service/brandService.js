@@ -24,4 +24,9 @@ app.service("brandService", function ($http) {
         return $http.post("../brand/batchDelete.do", idsArr);
     };
 
+    //查找品牌json列表
+    this.findBrandJsonList = function () {
+        return $http.get("../brand/findBrandJsonList.do");
+    }
+
 });
