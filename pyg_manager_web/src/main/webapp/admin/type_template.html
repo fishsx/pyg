@@ -89,9 +89,9 @@
 			                              <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)"></td>
 										  <td>{{entity.id}}</td>
 										  <td>{{entity.name}}</td>
-				                          <td>{{entity.brandIds}}</td>
-									      <td>{{entity.specIds}}</td>
-									      <td>{{entity.customAttributeItems}}</td>
+				                          <td>{{jsonKeyFormat(entity.brandIds,"text")}}</td>
+									      <td>{{jsonKeyFormat(entity.specIds,"text")}}</td>
+									      <td>{{jsonKeyFormat(entity.customAttributeItems,"text")}}</td>
 									      <td></td>		                                                                  
 		                                  <td class="text-center">                                           
 		                                 	  <button ng-click="showData(entity.id)" type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" >修改</button>

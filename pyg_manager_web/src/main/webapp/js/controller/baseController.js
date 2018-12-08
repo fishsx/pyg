@@ -32,4 +32,19 @@ app.controller("baseController", function ($scope) {
         return $scope.checkedIds.indexOf(id) !== -1;
     };
 
+    //指定json数组的某个key转 ,分割的字符串
+    $scope.jsonKeyFormat = function (jsonArr, key ) {
+        var arr = JSON.parse(jsonArr);
+        var val = "";
+        for (var i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                val += "," + arr[i][key];
+            } else {
+                val += arr[i][key];
+            }
+        }
+        return val;
+
+    };
+
 });

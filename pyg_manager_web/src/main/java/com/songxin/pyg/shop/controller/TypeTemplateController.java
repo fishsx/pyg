@@ -1,17 +1,15 @@
 package com.songxin.pyg.shop.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.songxin.pyg.pojo.TbTypeTemplate;
 import com.songxin.pyg.seller.service.TypeTemplateService;
-
-import com.songxin.pyg.vo.PageResultVO;
 import com.songxin.pyg.vo.OperateResultVO;
+import com.songxin.pyg.vo.PageResultVO;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * controller
