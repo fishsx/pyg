@@ -57,5 +57,13 @@ public interface ItemCatService {
 	 * @return
 	 */
 	public PageResultVO findByCondition(TbItemCat itemCat, int pageNum, int pageSize);
-	
+
+	/**
+	 * 根据父id查找分类
+	 * @param  id
+	 * @return java.util.List<com.songxin.pyg.pojo.TbItemCat>
+	 * @author fishsx
+	 * @date 2018/12/8 下午3:05
+	 */
+    List<TbItemCat> findByParentId(Long id);
 }

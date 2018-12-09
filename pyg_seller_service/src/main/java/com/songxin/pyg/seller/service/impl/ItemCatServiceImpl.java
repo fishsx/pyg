@@ -34,6 +34,18 @@ public class ItemCatServiceImpl implements ItemCatService {
 	}
 
 	/**
+	 * 查找所有顶级分类
+	 *
+	 * @return java.util.List<com.songxin.pyg.pojo.TbItemCat>
+	 * @author fishsx
+	 * @date 2018/12/8 下午3:05
+	 */
+	@Override
+	public List<TbItemCat> findByParentId(Long id) {
+		return itemCatMapper.findByParentId(id);
+	}
+
+	/**
 	 * 按分页查询
 	 */
 	@Override

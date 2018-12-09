@@ -1,17 +1,28 @@
  //控制层
-app.controller("itemCatController", function ($scope, $controller, itemCatService) {
+app.controller("itemCatController", function ($scope, $controller, itemCatService, typeTemplateService) {
     //继承基本的控制器 (共享$scope)
     $controller('baseController', {$scope: $scope});
 
+    //查找所有顶级分类
+    $scope.findAllTopCate = function () {
+        //0代表父id ,默认情况下这些都是顶级的分类
+        itemCatService.findByParentId(0).success(function (data) {
+            $scope.list = data;
+        })
+    };
+
+    $scope.parentId = 0;
+    //查找下一级类别
+    $scope.findSubCate = function (id) {
+        $scope.parentId = id;
+        itemCatService.findByParentId(id).success(function (data) {
+            $scope.list = data;
+        });
+    };
+
     //重新加载数据
     $scope.reloadList = function () {
-        if ($scope.queryVO === undefined) {
-            //根据当前页和每页条数查询 (查询所有)
-            $scope.findByPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
-        } else {
-            //根据条件查询
-            $scope.findByCondition($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage, $scope.queryVO);
-        }
+        $scope.findSubCate($scope.parentId);
     };
 
     //分页查询所有
@@ -37,9 +48,9 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
 
     //保存 (调用新增/修改方法)
     $scope.save = function () {
-        if ($scope.obj.itemCat.id != null) {
+        if ($scope.obj.id != null) {
             //执行修改方法
-            $scope.modify($scope.obj.itemCat.id);
+            $scope.modify($scope.obj.id);
         } else {
             // 执行新增方法
             $scope.add();
@@ -56,7 +67,7 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
         $scope.obj.itemCatOptions.splice(index, 1);
     };
 
-    //新建规格
+    //新建
     $scope.add = function () {
         itemCatService.add($scope.obj).success(function (data) {
             if (data.success) {
@@ -76,7 +87,7 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
             }
         });
     };
-    //修改规格
+    //修改
     $scope.modify = function (id) {
         itemCatService.update($scope.obj).success(function (data) {
             if (data.success) {
@@ -87,7 +98,7 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
         });
     };
 
-    //批量删除规格
+    //批量删除
     $scope.del = function () {
         if (confirm("您确定要删除吗?")) {
             itemCatService.batchDelete($scope.checkedIds).success(function (data) {
@@ -99,6 +110,36 @@ app.controller("itemCatController", function ($scope, $controller, itemCatServic
                 }
             });
         }
-    }
+    };
 
+    //面包屑导航功能
+    $scope.grade = 1; // 默认显示一级类别
+    //设置级别方法
+    $scope.setGrade = function (grade) {
+        $scope.grade = grade;
+    };
+    //改变导航栏的方法
+    $scope.changeNaviBar = function (entity) {
+        if ($scope.grade == 1) {
+            $scope.entity_1 = null;
+            $scope.entity_2 = null;
+        }
+        if ($scope.grade == 2) {
+            $scope.entity_1 = entity;
+            $scope.entity_2 = null;
+        }
+        if ($scope.grade == 3) {
+            $scope.entity_2 = entity;
+        }
+        $scope.findSubCate(entity.id);
+    };
+
+    //加载配置
+    $scope.loadOptions = function () {
+        $scope.options = {};
+        typeTemplateService.findAll().success(function (data) {
+            $scope.options.typeTemplate = data;
+        });
+
+    }
 });

@@ -28,4 +28,13 @@ public interface TbItemCatMapper {
     int updateByPrimaryKeySelective(TbItemCat record);
 
     int updateByPrimaryKey(TbItemCat record);
+
+    /**
+     * 根据父id查找类别
+     * @param id
+     * @return java.util.List<com.songxin.pyg.pojo.TbItemCat>
+     * @author fishsx
+     * @date 2018/12/8 下午3:08
+     */
+    List<TbItemCat> findByParentId(Long id);
 }

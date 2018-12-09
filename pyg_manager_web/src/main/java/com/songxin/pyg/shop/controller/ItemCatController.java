@@ -21,26 +21,28 @@ public class ItemCatController {
 
 	@Reference
 	private ItemCatService itemCatService;
-	
+
 	/**
 	 * 返回全部列表
 	 * @return
 	 */
 	@RequestMapping("/findAll")
-	public List<TbItemCat> findAll(){			
+	public List<TbItemCat> findAll(){
 		return itemCatService.findAll();
 	}
-	
-	
+
 	/**
-	 * 分页返回全部列表
-	 * @return
+	 * 根据父id查找类别
+	 * @param id
+	 * @return java.util.List<com.songxin.pyg.pojo.TbItemCat>
+	 * @author fishsx
+	 * @date 2018/12/8 下午3:04
 	 */
-	@RequestMapping("/findByPage")
-	public PageResultVO  findByPage(Integer pageNum, Integer pageSize){
-		return itemCatService.findByPage(pageNum, pageSize);
+	@RequestMapping("/findByParentId")
+	public List<TbItemCat> findByParentId(Long id) {
+		return itemCatService.findByParentId(id);
 	}
-	
+
 	/**
 	 * 增加
 	 * @param itemCat
@@ -56,7 +58,7 @@ public class ItemCatController {
 			return new OperateResultVO(false, "增加失败");
 		}
 	}
-	
+
 	/**
 	 * 修改
 	 * @param itemCat
@@ -71,8 +73,8 @@ public class ItemCatController {
 			e.printStackTrace();
 			return new OperateResultVO(false, "修改失败");
 		}
-	}	
-	
+	}
+
 	/**
 	 * 获取实体
 	 * @param id
@@ -82,7 +84,7 @@ public class ItemCatController {
 	public TbItemCat findOneById(Long id){
 		return itemCatService.findOneById(id);
 	}
-	
+
 	/**
 	 * 批量删除
 	 * @param checkedIds
@@ -98,7 +100,7 @@ public class ItemCatController {
 			return new OperateResultVO(false, "删除失败");
 		}
 	}
-	
+
 	/**
 	 * 根据条件分页查询
 	 * @param itemCat
@@ -110,5 +112,5 @@ public class ItemCatController {
 	public PageResultVO findByCondition(@RequestBody TbItemCat itemCat,Integer pageNum, Integer pageSize){
 		return itemCatService.findByCondition(itemCat, pageNum, pageSize);
 	}
-	
+
 }

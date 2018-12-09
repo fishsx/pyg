@@ -1,10 +1,15 @@
 //服务层
 app.service("itemCatService", function ($http) {
 
+    //查找所有顶级分类
+    this.findByParentId = function (id) {
+        return $http.get("../itemCat/findByParentId.do?id=" + id);
+    };
+
 	//读取列表数据绑定到表单中
-	this.findAll=function(){
-		return $http.get('../itemCat/findAll.do');
-	}
+    this.findAll = function () {
+        return $http.get('../itemCat/findAll.do');
+    };
     //分页查询所有
     this.findByPage = function (pageNum,pageSize) {
         return $http.get('../itemCat/findByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize);

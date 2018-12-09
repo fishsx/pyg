@@ -193,4 +193,10 @@
       type_id = #{typeId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+  <!-- 根据父id查找分类 -->
+  <select id="findByParentId" parameterType="long" resultMap="BaseResultMap">
+    select * from tb_item_cat where parent_id = #{id}
+  </select>
 </mapper>
