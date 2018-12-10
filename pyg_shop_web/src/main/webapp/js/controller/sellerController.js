@@ -14,19 +14,6 @@ app.controller("sellerController", function ($scope, $controller, sellerService)
         }
     };
 
-
-    //修改状态
-    $scope.modifyStatusById = function ( status) {
-        $scope.obj.status = status;
-        sellerService.update($scope.obj).success(function (data) {
-            if (data.success) {
-                $scope.reloadList();
-            } else {
-                alert("状态修改失败!请联系管理员!");
-            }
-        });
-    };
-
     //分页查询所有
     $scope.findByPage = function (pageNum, pageSize) {
         sellerService.findByPage(pageNum, pageSize).success(function (data) {
@@ -73,7 +60,8 @@ app.controller("sellerController", function ($scope, $controller, sellerService)
     $scope.add = function () {
         sellerService.add($scope.obj).success(function (data) {
             if (data.success) {
-                $scope.reloadList();
+                alert("注册申请已成功提交,请等待审核通过,就可以进行登录");
+                location.href = "/shoplogin.html";
             } else {
                 alert(data.message);
             }

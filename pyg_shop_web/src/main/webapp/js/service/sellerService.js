@@ -5,13 +5,6 @@ app.service("sellerService", function ($http) {
     this.findAll = function () {
         return $http.get('../seller/findAll.do');
     };
-
-    //查找所有未审核的商家
-    this.findAllUnAudit = function (pageNum, pageSize) {
-        //查找状态为未审核的商家
-        return $http.get("../seller/findByStatus.do?pageNum=" + pageNum + '&pageSize=' + pageSize +"&status=0");
-    };
-
     //分页查询所有
     this.findByPage = function (pageNum,pageSize) {
         return $http.get('../seller/findByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize);
@@ -26,7 +19,7 @@ app.service("sellerService", function ($http) {
     };
     //根据id查找
     this.findOneById = function (id) {
-        return $http.post("../seller/findOneById.do?id=" + id);
+        return $http.get("../seller/findOneById.do?id=" + id);
     };
     //修改
     this.update = function (obj) {

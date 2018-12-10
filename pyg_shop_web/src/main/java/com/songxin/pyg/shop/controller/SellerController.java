@@ -30,23 +30,8 @@ public class SellerController {
 	public List<TbSeller> findAll(){			
 		return sellerService.findAll();
 	}
-
-	/**
-	 * 根据状态查找
-	 * @param status (0: 未审核 1:审核通过 2:已驳回 3:已停用)
-	 * @param pageNum
-	 * @param pageSize
-	 * @return com.songxin.pyg.vo.PageResultVO
-	 * @author fishsx
-	 * @date 2018/12/10 下午4:52
-	 */
-	@RequestMapping("/findByStatus")
-	public PageResultVO findByStatus(String status, Integer pageNum, Integer pageSize) {
-		TbSeller seller = new TbSeller();
-		seller.setStatus(status);
-		return sellerService.findByCondition(seller, pageNum, pageSize);
-	}
-
+	
+	
 	/**
 	 * 分页返回全部列表
 	 * @return
