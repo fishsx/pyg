@@ -1,7 +1,9 @@
 package com.songxin.pyg.seller.service.impl;
 import java.util.List;
 
+import com.songxin.pyg.mapper.TbGoodsDescMapper;
 import com.songxin.pyg.seller.service.GoodsService;
+import com.songxin.pyg.vo.combvo.GoodsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
@@ -13,6 +15,7 @@ import com.songxin.pyg.pojo.TbGoodsExample;
 import com.songxin.pyg.pojo.TbGoodsExample.Criteria;
 
 import com.songxin.pyg.vo.PageResultVO;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 服务实现层
@@ -20,10 +23,14 @@ import com.songxin.pyg.vo.PageResultVO;
  *
  */
 @Service
+@Transactional
 public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private TbGoodsMapper goodsMapper;
+
+	@Autowired
+	private TbGoodsDescMapper goodsDescMapper;
 	
 	/**
 	 * 查询全部
@@ -122,5 +129,29 @@ public class GoodsServiceImpl implements GoodsService {
 		Page<TbGoods> page= (Page<TbGoods>)goodsMapper.selectByExample(example);		
 		return new PageResultVO(page.getTotal(), page.getResult());
 	}
-	
+
+	/**
+	 * 添加货物[组合实体]
+	 *
+	 * @param goodsVO
+	 * @return void
+	 * @author fishsx
+	 * @date 2018/12/11 下午8:19
+	 */
+	@Override
+	public void addCombGoods(GoodsVO goodsVO) {
+		if (goodsVO.getGoods() != null) {
+			TbGoods goods = goodsVO.getGoods();
+			// 设置未审核状态 -- 0
+			goods.setAuditStatus("0");
+			goodsMapper.insert(goods);
+			//获取刚插入的货物ID,用于从表的新增记录
+			Long id = goodsVO.getGoods().getId();
+			if (goodsVO.getGoodsDesc() != null) {
+				goodsVO.getGoodsDesc().setGoodsId(id);
+				goodsDescMapper.insert(goodsVO.getGoodsDesc());
+			}
+		}
+
+	}
 }

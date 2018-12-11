@@ -26,6 +26,8 @@
 			 authentication-failure-url="/shoplogin.html"
 			 always-use-default-target="true" />
 		<csrf disabled="true" />
+
+		<logout/>
 		
 		<!-- iframe策略 -->
 		<headers>

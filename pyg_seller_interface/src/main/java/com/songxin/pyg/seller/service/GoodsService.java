@@ -3,6 +3,8 @@ import java.util.List;
 import com.songxin.pyg.pojo.TbGoods;
 
 import com.songxin.pyg.vo.PageResultVO;
+import com.songxin.pyg.vo.combvo.GoodsVO;
+
 /**
  * 服务层接口
  * @author Administrator
@@ -57,5 +59,14 @@ public interface GoodsService {
 	 * @return
 	 */
 	public PageResultVO findByCondition(TbGoods goods, int pageNum, int pageSize);
+
+	/**
+	 * 添加货物[组合实体] 
+	 * @param goods 
+	 * @return void
+	 * @author fishsx
+	 * @date 2018/12/11 下午8:35
+	 */
+	public void addCombGoods(GoodsVO goods); 
 	
 }
