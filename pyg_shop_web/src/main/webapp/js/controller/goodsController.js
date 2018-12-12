@@ -144,11 +144,15 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
         }
     });
 
-    //监听模板ID,动态生成品牌下拉列表数据
+    //监听模板ID,动态生成品牌下拉列表数据和拓展属性
     $scope.$watch("obj.goods.typeTemplateId", function (newVal, oldVal) {
         if (newVal != null && newVal !== "") {
             typeTemplateService.findOneById(newVal).success(function (data) {
                 $scope.brandList = JSON.parse(data.brandIds);
+                if ($scope.obj.goodsDesc === undefined) {
+                    $scope.obj.goodsDesc = {};
+                }
+                $scope.obj.goodsDesc.customAttributeItems = JSON.parse(data.customAttributeItems);
             });
         }
     });
