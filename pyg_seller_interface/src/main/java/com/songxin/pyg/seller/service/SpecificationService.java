@@ -79,4 +79,13 @@ public interface SpecificationService {
      * @date 2018/12/8 下午12:08
      */
     List<Map> findSpecJsonList();
+
+    /**
+     * 根据模板ID返回指定格式的规格和规格选项Json列表
+     * @param typeTemplateId
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/12 下午7:19
+     */
+    List<Map> findSpecOptionsJsonList(Long typeTemplateId);
 }

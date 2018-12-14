@@ -1,22 +1,24 @@
 package com.songxin.pyg.seller.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.songxin.pyg.mapper.TbSpecificationMapper;
 import com.songxin.pyg.mapper.TbSpecificationOptionMapper;
-import com.songxin.pyg.pojo.TbSpecification;
-import com.songxin.pyg.pojo.TbSpecificationExample;
-import com.songxin.pyg.pojo.TbSpecificationOption;
-import com.songxin.pyg.pojo.TbSpecificationOptionExample;
+import com.songxin.pyg.mapper.TbTypeTemplateMapper;
+import com.songxin.pyg.pojo.*;
 import com.songxin.pyg.seller.service.SpecificationService;
 import com.songxin.pyg.vo.PageResultVO;
 import com.songxin.pyg.vo.combvo.SpecificationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * 规格的业务层实现
@@ -32,6 +34,9 @@ public class SpecificationServiceImpl implements SpecificationService {
 
     @Autowired
     private TbSpecificationOptionMapper specificationOptionMapper;
+
+    @Autowired
+    private TbTypeTemplateMapper typeTemplateMapper;
 
     /**
      * 查询所有规格
@@ -161,4 +166,32 @@ public class SpecificationServiceImpl implements SpecificationService {
         return specificationMapper.findSpecJsonList();
     }
 
+    /**
+     * 根据模板ID返回指定格式的规格和规格选项Json列表
+     *
+     * @param typeTemplateId
+     * @return java.util.List<java.util.Map>
+     * @author fishsx
+     * @date 2018/12/12 下午7:19
+     */
+    @Override
+    public List<Map> findSpecOptionsJsonList(Long typeTemplateId) {
+        List<Map> jsonList = new ArrayList<>();
+        TbTypeTemplate typeTemplate = typeTemplateMapper.selectByPrimaryKey(typeTemplateId);
+        String specIds = typeTemplate.getSpecIds();
+        List<Map> specMaps = JSON.parseArray(specIds, Map.class);
+        for (Map map : specMaps) {
+            String specName = (String) map.get("text");
+            Long specId = Long.parseLong(map.get("id").toString());
+            //根据规格ID查询所有的规格选项
+            TbSpecificationOptionExample example = new TbSpecificationOptionExample();
+            //设置升序字段
+            example.setOrderByClause("orders");
+            example.or().andSpecIdEqualTo(specId);
+            List<TbSpecificationOption> options = specificationOptionMapper.selectByExample(example);
+            map.put("options", options.stream().map(TbSpecificationOption::getOptionName).collect(Collectors.toList()));
+            jsonList.add(map);
+        }
+        return jsonList;
+    }
 }

@@ -29,4 +29,9 @@ app.service("specificationService", function ($http) {
         return $http.get("../specification/findSpecJsonList.do");
     };
 
+    //查找指定的规格数据
+    this.findSpecOptionsJsonList = function (typeTemplateId) {
+        return $http.get("../specification/findSpecOptionsJsonList.do?typeTemplateId=" + typeTemplateId);
+    }
+
 });

@@ -47,4 +47,17 @@ app.controller("baseController", function ($scope) {
 
     };
 
+    //list:当前传入的集合，
+    //key:当前要查询的key，key
+    //value:这个key的值是否合keyValue相等，相同的时候返回当前list[i]，
+    //该方法目的是为了能查找到goodsDesc.specificationItems中符合attributeName中的内容并把当前对象返回
+    $scope.indexOfList = function (list, key, value) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i][key] === value) {
+                return i;
+            }
+        }
+        return -1;
+    };
+
 });

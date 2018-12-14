@@ -1,5 +1,5 @@
  //控制层
-app.controller("goodsController", function ($scope, $controller, goodsService, itemCatService,typeTemplateService) {
+app.controller("goodsController", function ($scope, $controller, goodsService, itemCatService,typeTemplateService,specificationService,uploadService) {
     //继承基本的控制器 (共享$scope)
     $controller('baseController', {$scope: $scope});
 
@@ -62,7 +62,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
 
         goodsService.add($scope.obj).success(function (data) {
             if (data.success) {
-                $scope.obj = {};
+                $scope.obj = {"goods":{},"goodsDesc":{"itemImages":[]}};
                 editor.html("");
             } else {
                 alert(data.message);
@@ -144,19 +144,87 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
         }
     });
 
-    //监听模板ID,动态生成品牌下拉列表数据和拓展属性
+    //监听模板ID,动态生成
+    // 1.品牌下拉列表数据
+    // 2.拓展属性数据
+    // 3.规格数据
     $scope.$watch("obj.goods.typeTemplateId", function (newVal, oldVal) {
         if (newVal != null && newVal !== "") {
             typeTemplateService.findOneById(newVal).success(function (data) {
+                //获取品牌数据
                 $scope.brandList = JSON.parse(data.brandIds);
+                //获取扩展属性数据
                 if ($scope.obj.goodsDesc === undefined) {
                     $scope.obj.goodsDesc = {};
                 }
                 $scope.obj.goodsDesc.customAttributeItems = JSON.parse(data.customAttributeItems);
+                //获取指定的类型模板ID的规格及规格选项数据
+                specificationService.findSpecOptionsJsonList(newVal).success(function (data) {
+                    $scope.specOptionList = data;
+                });
             });
         }
     });
 
+
+    //更新已选择的规格选项
+    $scope.updateSpecAttribute = function ($event, specName, specOption) {
+        var itemsArr = $scope.obj.goodsDesc.specificationItems;
+
+        if (itemsArr === undefined) {
+            itemsArr = [];
+        }
+        //使用自定义查找指定key的值的索引
+        var index = $scope.indexOfList(itemsArr,"attributeName",specName);
+        if ($event.target.checked) {
+            //勾选新的规格选项,判断实体中有无选项值
+            if (index !== -1) {
+                //存在此规格,则在此规格中加入一个specOption选项
+                itemsArr[index].attributeValue.push(specOption);
+            } else {
+                //不存在此规格,新增一个
+                itemsArr.push({"attributeName": specName,"attributeValue": [specOption]});
+            }
+        } else {
+            //取消勾选
+            var optionsArr = itemsArr[index].attributeValue;
+            var index2 = optionsArr.indexOf(specOption);
+            optionsArr.splice(index2,1);
+            //规格没有勾选任何选项的时候, 删除此规格
+            if (optionsArr.length <= 0) {
+                itemsArr.splice(index,1);
+            }
+        }
+        $scope.obj.goodsDesc.specificationItems = itemsArr;
+    };
+
+
+    //初始化需要提交的实体对象
+    $scope.init = function () {
+        $scope.obj = {goods:{},goodsDesc:{itemImages: []}};
+        $scope.uploadFileObj = {};
+    };
+
+    //上传文件
+    $scope.uploadFile = function () {
+        uploadService.uploadFile().success(function (data) {
+            if (data.success) {
+                $scope.uploadFileObj.url = data.data;
+            } else {
+                alert(data.message);
+            }
+        });
+    };
+
+    //保存上传的文件[在提交的对象中]
+    $scope.saveUploadFile = function () {
+        $scope.obj.goodsDesc.itemImages.push($scope.uploadFileObj);
+    };
+
+    //删除上传的文件[在提交的对象中]
+    $scope.delUploadFile = function (index) {
+        $scope.obj.goodsDesc.itemImages.splice(index,1);
+    };
 
 
 
