@@ -227,5 +227,29 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
     };
 
 
+    //SKU列表动态显示
+    $scope.createItemList = function () {
+        $scope.obj.itemList = [{spec: {}, price: 0, num: 99999, status: '1', isDefault: '0'}];// 初始
+        var items = $scope.obj.goodsDesc.specificationItems;
+        for (var i = 0; i < items.length; i++) {
+            $scope.obj.itemList = addColumn($scope.obj.itemList,
+                items[i].attributeName, items[i].attributeValue);
+        }
+    };
+    // 添加列值:参数1是创建的itemList集合，参数2是规格名称，参数3是规格值的集合
+    var addColumn = function (list, columnName, columnValues) {
+        var newList = [];// 新的集合
+        for (var i = 0; i < list.length; i++) {
+            var oldRow = list[i];  //获取出当前行的内容 {spec:{},price:'0.01',num:'99999',status:'0',isDefault:'0'}
+            for (var j = 0; j < columnValues.length; j++) {//循环attributeValue数组的内容
+                var newRow = JSON.parse(JSON.stringify(oldRow));// 深克隆,根据attributeValue的数量
+                newRow.spec[columnName] = columnValues[j];//{spec:{"网络制式":"移动4G"},price:'0.01',num:'99999',status:'0',isDefault:'0'}
+                newList.push(newRow);
+            }
+        }
+        return newList;
+    }
+
+
 
 });
