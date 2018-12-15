@@ -1,5 +1,5 @@
  //控制层
-app.controller("contentController", function ($scope, $controller, contentService) {
+app.controller("contentController", function ($scope, $controller, contentService,contentCategoryService,uploadService) {
     //继承基本的控制器 (共享$scope)
     $controller('baseController', {$scope: $scope});
 
@@ -18,6 +18,7 @@ app.controller("contentController", function ($scope, $controller, contentServic
     $scope.findByPage = function (pageNum, pageSize) {
         contentService.findByPage(pageNum, pageSize).success(function (data) {
             $scope.list = data.data;
+            $scope.status = ["无效","有效"];
             $scope.paginationConf.totalItems = data.total;
         });
     };
@@ -37,9 +38,9 @@ app.controller("contentController", function ($scope, $controller, contentServic
 
     //保存 (调用新增/修改方法)
     $scope.save = function () {
-        if ($scope.obj.content.id != null) {
+        if ($scope.obj.id != null) {
             //执行修改方法
-            $scope.modify($scope.obj.content.id);
+            $scope.modify($scope.obj.id);
         } else {
             // 执行新增方法
             $scope.add();
@@ -99,6 +100,27 @@ app.controller("contentController", function ($scope, $controller, contentServic
                 }
             });
         }
-    }
+    };
+
+    //查找广告类目列表
+    $scope.findContentCategoryList = function () {
+        contentCategoryService.findAll().success(function (data) {
+            $scope.contentCategoryList = data;
+        });
+    };
+
+    //上传文件
+    $scope.uploadFile = function () {
+        uploadService.uploadFile().success(function (data) {
+            if (data.success) {
+                $scope.obj.pic = data.data;
+            } else {
+                alert(data.message);
+            }
+        });
+    };
+
+
+
 
 });

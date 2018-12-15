@@ -209,7 +209,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
     $scope.uploadFile = function () {
         uploadService.uploadFile().success(function (data) {
             if (data.success) {
-                $scope.uploadFileObj.url = data.data;
+                $scope.pic = data.data;
             } else {
                 alert(data.message);
             }

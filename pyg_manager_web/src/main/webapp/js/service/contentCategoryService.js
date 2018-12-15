@@ -2,9 +2,9 @@
 app.service("contentCategoryService", function ($http) {
 
 	//读取列表数据绑定到表单中
-	this.findAll=function(){
-		return $http.get('../contentCategory/findAll.do');
-	}
+    this.findAll = function () {
+        return $http.get('../contentCategory/findAll.do');
+    };
     //分页查询所有
     this.findByPage = function (pageNum,pageSize) {
         return $http.get('../contentCategory/findByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize);
