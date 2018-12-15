@@ -9,9 +9,9 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!--dubbo协议端口配置 默认: 20880-->
-    <dubbo:protocol name="dubbo" port="20881"></dubbo:protocol>
+	<dubbo:protocol name="dubbo" port="20881"/>
 	<!--提供dubbo服务的项目名称-->
-	<dubbo:application name="pyg-seller-service"/>
+	<dubbo:application name="pyg_seller_service"/>
 	<!--注册中心的地址-->
     <dubbo:registry address="zookeeper://10.211.55.16:2181"/>
 	<!--使用注解 dubbo包扫描-->
