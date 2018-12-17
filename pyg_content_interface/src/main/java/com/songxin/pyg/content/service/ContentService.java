@@ -1,8 +1,9 @@
 package com.songxin.pyg.content.service;
-import java.util.List;
-import com.songxin.pyg.pojo.TbContent;
 
+import com.songxin.pyg.pojo.TbContent;
 import com.songxin.pyg.vo.PageResultVO;
+
+import java.util.List;
 /**
  * 服务层接口
  * @author Administrator
@@ -57,5 +58,14 @@ public interface ContentService {
 	 * @return
 	 */
 	public PageResultVO findByCondition(TbContent content, int pageNum, int pageSize);
-	
+
+
+	/**
+	 * 根据id查找所有已启动的广告列表 
+	 * @param id 
+	 * @return java.util.List<com.songxin.pyg.pojo.TbContent>
+	 * @author fishsx
+	 * @date 2018/12/15 下午8:34
+	 */
+	public List<TbContent> findAllEnabledByCateId(Long id);
 }

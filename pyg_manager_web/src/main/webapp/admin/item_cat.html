@@ -32,12 +32,12 @@
 <body class="hold-transition skin-red sidebar-mini" ng-app="pyg" ng-controller="itemCatController" ng-init="reloadList();loadOptions()">
   <!-- .box-body -->
                     <div class="box-header with-border">
-                        <h3 class="box-title">商品分类管理     
+                        <h3 class="box-title">商品分类管理
                        	</h3>
                     </div>
 
                     <div class="box-body">
-                  			 <ol class="breadcrumb">	                        	
+                  			 <ol class="breadcrumb">
                         		<li>
 		                        	<a href="#" ng-click="grade=1;changeNaviBar({id:0})">顶级分类列表</a>
 		                        </li>
@@ -51,7 +51,7 @@
 
                         <!-- 数据表格 -->
                         <div class="table-box">
-							
+
                             <!--工具栏-->
                             <div class="pull-left">
                                 <div class="form-group form-inline">
@@ -62,19 +62,19 @@
                                     </div>
                                 </div>
                             </div>
-                       		
-                        
+
+
 			                <!--数据列表-->
 			                  <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
 			                      <thead>
 			                          <tr>
 			                              <th class="" style="padding-right:0px">
 			                                  <input type="checkbox" class="icheckbox_square-blue">
-			                              </th> 
+			                              </th>
 										  <th class="sorting_asc">分类ID</th>
-									      <th class="sorting">分类名称</th>									   
+									      <th class="sorting">分类名称</th>
 									      <th class="sorting">类型模板ID</th>
-									     						
+
 					                      <th class="text-center">操作</th>
 			                          </tr>
 			                      </thead>
@@ -84,25 +84,25 @@
 										  <td>{{entity.id}}</td>
 				                          <td>{{entity.name}}</td>
 									      <td>{{entity.typeId}}</td>
-		                                  <td class="text-center">		                                     
+		                                  <td class="text-center">
 		                                      <button ng-if="grade<3" ng-click="setGrade(grade+1);changeNaviBar(entity)" type="button" class="btn bg-olive btn-xs" >查询下级</button>
 		                                 	  <button ng-click="showData(entity.id)" type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" >修改</button>
 		                                  </td>
 			                          </tr>
 			                      </tbody>
 			                  </table>
-			                  <!--数据列表/-->                      
-						
+			                  <!--数据列表/-->
+
                         </div>
                         <!-- 数据表格 /-->
-                        
-                        
-                        
-                        
+
+
+
+
                      </div>
                     <!-- /.box-body -->
-              
-                                
+
+
 <!-- 编辑窗口 -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" >
@@ -111,8 +111,8 @@
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3 id="myModalLabel">商品分类编辑</h3>
 		</div>
-		<div class="modal-body">							
-			
+		<div class="modal-body">
+
 			<table class="table table-bordered table-striped"  width="800px">
 				<tr>
 		      		<td>上级商品分类</td>
@@ -123,18 +123,18 @@
 		      	<tr>
 		      		<td>商品分类名称</td>
 		      		<td><input ng-model="obj.name" class="form-control" placeholder="商品分类名称"></td>
-		      	</tr>			  
+		      	</tr>
 		      	<tr>
 		      		<td>类型模板</td>
-		      		<td>	      		
+		      		<td>
 						<select ng-model="obj.typeId" class="form-control" name="type" id="typeId"
 								ng-options="type.id as type.name for type in options.typeTemplate"></select>
-		      		</td>		      		      		
+		      		</td>
 		      	</tr>
-			 </table>				
-			
+			 </table>
+
 		</div>
-		<div class="modal-footer">						
+		<div class="modal-footer">
 			<button ng-click="save()" class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>

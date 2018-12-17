@@ -10,6 +10,7 @@ import com.songxin.pyg.pojo.TbContentExample;
 import com.songxin.pyg.pojo.TbContentExample.Criteria;
 import com.songxin.pyg.vo.PageResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class ContentServiceImpl implements ContentService {
 
     @Autowired
     private TbContentMapper contentMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 查询全部
@@ -48,6 +52,10 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public void add(TbContent content) {
         contentMapper.insert(content);
+        //清除新增的广告类别redis缓存
+        redisTemplate.boundHashOps("content").delete(content.getCategoryId());
+
+
     }
 
 
@@ -57,6 +65,13 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public void update(TbContent content) {
         contentMapper.updateByPrimaryKey(content);
+        //获取修改前的广告对象
+        TbContent beforeUpdate = contentMapper.selectByPrimaryKey(content.getId());
+        if (!beforeUpdate.getCategoryId().equals(content.getCategoryId())) {
+            //修改前后的广告类别变动过,清除2类缓存
+            redisTemplate.boundHashOps("content").delete(content.getCategoryId());
+        }
+        redisTemplate.boundHashOps("content").delete(beforeUpdate.getCategoryId());
     }
 
     /**
@@ -76,7 +91,10 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public void batchDelete(Long[] ids) {
         for (Long id : ids) {
+            //清除当前广告类别的缓存
+            TbContent delContent = contentMapper.selectByPrimaryKey(id);
             contentMapper.deleteByPrimaryKey(id);
+            redisTemplate.boundHashOps("content").delete(delContent.getCategoryId());
         }
     }
 
@@ -111,4 +129,29 @@ public class ContentServiceImpl implements ContentService {
         return new PageResultVO(page.getTotal(), page.getResult());
     }
 
+    /**
+     * 根据id查找所有已启动的广告列表
+     *
+     * @param id
+     * @return java.util.List<com.songxin.pyg.pojo.TbContent>
+     * @author fishsx
+     * @date 2018/12/15 下午8:32
+     */
+    @Override
+    public List<TbContent> findAllEnabledByCateId(Long id) {
+        List<TbContent> contentList = (List<TbContent>) redisTemplate.boundHashOps("content").get(id);
+
+        if (contentList == null) {
+            //数据库查询
+            System.out.println("数据库查询...");
+            TbContentExample example = new TbContentExample();
+            example.setOrderByClause("sort_order");
+            example.or().andStatusEqualTo("1").andCategoryIdEqualTo(id);
+            contentList = contentMapper.selectByExample(example);
+            redisTemplate.boundHashOps("content").put(id, contentList);
+        } else {
+            System.out.println("redis查询...");
+        }
+        return contentList;
+    }
 }

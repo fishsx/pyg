@@ -18,6 +18,7 @@
         <module>pyg_content_interface</module>
         <module>pyg_content_service</module>
         <module>pyg_portal_web</module>
+        <module>pyg_solr_utils</module>
     </modules>
     <packaging>pom</packaging>
 

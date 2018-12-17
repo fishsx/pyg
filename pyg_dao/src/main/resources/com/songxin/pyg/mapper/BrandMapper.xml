@@ -15,7 +15,7 @@
     </insert>
 
     <!-- 根据 id 查找品牌-->
-    <select id="findOneById" parameterType="int" resultType="tbBrand">
+    <select id="findOneById" parameterType="long" resultType="tbBrand">
         select id, name, first_char firstChar
         from tb_brand
         where id = #{id};

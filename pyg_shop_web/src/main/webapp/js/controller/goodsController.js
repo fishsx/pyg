@@ -201,7 +201,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
 
     //初始化需要提交的实体对象
     $scope.init = function () {
-        $scope.obj = {goods:{},goodsDesc:{itemImages: []}};
+        $scope.obj = {goods:{isEnableSpec:"1"},goodsDesc:{itemImages: []}};
         $scope.uploadFileObj = {};
     };
 
@@ -209,7 +209,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
     $scope.uploadFile = function () {
         uploadService.uploadFile().success(function (data) {
             if (data.success) {
-                $scope.pic = data.data;
+                $scope.uploadFileObj.url = data.data;
             } else {
                 alert(data.message);
             }

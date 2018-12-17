@@ -2,9 +2,9 @@
 app.service("contentService", function ($http) {
 
 	//读取列表数据绑定到表单中
-	this.findAll=function(){
-		return $http.get('../content/findAll.do');
-	}
+    this.findAll = function () {
+        return $http.get('../content/findAll.do');
+    };
     //分页查询所有
     this.findByPage = function (pageNum,pageSize) {
         return $http.get('../content/findByPage.do?pageNum=' + pageNum + '&pageSize=' + pageSize);
@@ -30,4 +30,8 @@ app.service("contentService", function ($http) {
         return $http.post("../content/batchDelete.do", idsArr);
     };
 
+    //根据广告的类目id查询所有已启用的广告
+    this.findAllEnabledByCateId = function (cid) {
+        return $http.get("../content/findAllEnabledByCateId.do?id=" + cid);
+    };
 });

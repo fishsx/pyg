@@ -44,7 +44,7 @@ public interface BrandService {
      * @author fishsx
      * @date 2018/12/4 下午8:22
      */
-    TbBrand findOneById(Integer id);
+    TbBrand findOneById(Long id);
 
     /**
      * 修改品牌

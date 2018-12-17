@@ -71,7 +71,7 @@ public class BrandServiceImpl implements BrandService {
      * @date 2018/12/4 下午8:22
      */
     @Override
-    public TbBrand findOneById(Integer id) {
+    public TbBrand findOneById(Long id) {
         return brandMapper.findOneById(id);
     }
 

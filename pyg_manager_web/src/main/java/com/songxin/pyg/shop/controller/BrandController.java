@@ -74,7 +74,7 @@ public class BrandController {
      * @date 2018/12/4 下午8:21
      */
     @RequestMapping("findOneById")
-    public TbBrand findOneById(Integer id) {
+    public TbBrand findOneById(Long id) {
         return brandService.findOneById(id);
     }
 

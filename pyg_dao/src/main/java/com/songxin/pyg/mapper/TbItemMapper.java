@@ -28,4 +28,13 @@ public interface TbItemMapper {
     int updateByPrimaryKeySelective(TbItem record);
 
     int updateByPrimaryKey(TbItem record);
+
+    /**
+     * 查找所有已上架的商品
+     * @param
+     * @return java.util.List<com.songxin.pyg.pojo.TbItem>
+     * @author fishsx
+     * @date 2018/12/17 下午7:01
+     */
+    List<TbItem> findAllGrounding();
 }

@@ -35,7 +35,7 @@ public interface BrandMapper {
      * @author fishsx
      * @date 2018/12/4 下午8:23
      */
-    TbBrand findOneById(Integer id);
+    TbBrand findOneById(Long id);
 
     /**
      * 修改品牌
