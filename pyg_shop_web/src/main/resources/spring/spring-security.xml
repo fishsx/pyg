@@ -45,7 +45,7 @@
 	<!--bcrypt加密-->
 	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-	<beans:bean id="userDetailService" class="com.songxin.pyg.shop.service.UserDetailServiceImpl">
+	<beans:bean id="userDetailService" class="com.songxin.pyg.user.service.UserDetailServiceImpl">
 		<beans:property name="sellerService" ref="sellerService"/>
 	</beans:bean>
 

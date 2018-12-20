@@ -35,6 +35,6 @@
 	<!-- 引用dubbo 服务 -->
 	<dubbo:application name="pyg-seller-web" />
 	<dubbo:registry address="zookeeper://10.211.55.16:2181"/>
-	<dubbo:annotation package="com.songxin.pyg.shop.controller" />
+	<dubbo:annotation package="com.songxin.pyg.manager.controller" />
 
 </beans>

@@ -19,6 +19,15 @@ public class GoodsVO implements Serializable {
     private TbGoods goods;
     private TbGoodsDesc goodsDesc;
     private List<TbItem> itemList;
+    private List<String> categoryNameList;
+
+    public List<String> getCategoryNameList() {
+        return categoryNameList;
+    }
+
+    public void setCategoryNameList(List<String> categoryNameList) {
+        this.categoryNameList = categoryNameList;
+    }
 
     public TbGoods getGoods() {
         return goods;

@@ -3,6 +3,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
     //继承基本的控制器 (共享$scope)
     $controller('baseController', {$scope: $scope});
 
+    $scope.status=['未审核','已审核','审核未通过','关闭'];//商品状态
     //重新加载数据
     $scope.reloadList = function () {
         if ($scope.queryVO === undefined) {
@@ -12,6 +13,7 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
             //根据条件查询
             $scope.findByCondition($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage, $scope.queryVO);
         }
+
     };
 
     //分页查询所有
@@ -248,8 +250,17 @@ app.controller("goodsController", function ($scope, $controller, goodsService, i
             }
         }
         return newList;
-    }
+    };
 
+    //格式化商品分类
+    $scope.itemCateList = [];
+    $scope.initItemCateList = function () {
+        itemCatService.findAll().success(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $scope.itemCateList[data[i].id] = data[i].name;
+            }
+        });
+    };
 
 
 });

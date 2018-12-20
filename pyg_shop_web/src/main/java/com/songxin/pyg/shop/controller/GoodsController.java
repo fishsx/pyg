@@ -115,6 +115,8 @@ public class GoodsController {
 	 */
 	@RequestMapping("/findByCondition")
 	public PageResultVO findByCondition(@RequestBody TbGoods goods,Integer pageNum, Integer pageSize){
+		String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+		goods.setSellerId(sellerId);
 		return goodsService.findByCondition(goods, pageNum, pageSize);
 	}
 	

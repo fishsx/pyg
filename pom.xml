@@ -19,6 +19,12 @@
         <module>pyg_content_service</module>
         <module>pyg_portal_web</module>
         <module>pyg_solr_utils</module>
+        <module>pyg_search_interface</module>
+        <module>pyg_search_service</module>
+        <module>pyg_search_web</module>
+        <module>pyg_page_interface</module>
+        <module>pyg_page_service</module>
+        <module>pyg_page_web</module>
     </modules>
     <packaging>pom</packaging>
 
